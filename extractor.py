@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 import fnmatch
 import glob
@@ -14,7 +15,7 @@ if __name__ == '__main__':
     parser.add_argument("-d", "--destination", dest="dest", required=True, 
                         type=check_dest, 
                         help="destination directory for code extractor")
-    parser.add_argument("-m", "--mask", dest="mask", default=".*", 
+    parser.add_argument("-m", "--mask", dest="mask", default="*?.*", 
                         type=lambda s: s.split(','),
                         help="file mask for code extractor")
     parser.add_argument("-o", "--output", dest="out", default="output.txt" ,
@@ -26,6 +27,10 @@ if __name__ == '__main__':
     for m in args.mask:
         m = os.path.join(args.dest, "**", m)
         files += glob.glob(m, recursive=True)
+
+    print("Extracted files:")
+    for name in files:
+        print(name)
         
     print("Total files: %i" % len(files))
     with open(args.out, "w", encoding='utf-8', errors='ignore') as out:
