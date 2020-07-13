@@ -32,5 +32,7 @@ if __name__ == '__main__':
         for f in files:
             print("file: %s" % f[len(args.dest) + 1:], file=out)
             with open(f, "r", encoding='utf-8', errors='ignore') as f:
-                    print(f.read(), file=out)
+                for line in f:
+                    if len(line.strip()):
+                        print(line, file=out, end='')
             print(file=out)
